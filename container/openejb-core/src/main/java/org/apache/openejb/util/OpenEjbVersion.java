@@ -37,7 +37,7 @@ public class OpenEjbVersion {
         Properties info = new Properties();
 
         try {
-            ResourceFinder finder = new ResourceFinder();
+            ResourceFinder finder = new ResourceFinder("",this.getClass().getClassLoader());
             info = finder.findProperties("openejb-version.properties");
         } catch (java.io.IOException e) {
             e.printStackTrace();

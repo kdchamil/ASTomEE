@@ -65,11 +65,14 @@ public class ServerListener implements LifecycleListener {
                 return;
             }
 
+	        properties.setProperty("tomee.webapp.classloader.enrichment.skip","true");
+
             // set the openejb.loader property to tomcat-system
             properties.setProperty("openejb.loader", "tomcat-system");
 
+	        properties.setProperty("openejb.system.apps","false");
             // Get the value of catalina.home and set it to openejb.home
-            String catalinaHome = System.getProperty("catalina.home");
+            String catalinaHome = System.getProperty("catalina.base");
             properties.setProperty("openejb.home", catalinaHome);
 
             //Sets system property for openejb.home

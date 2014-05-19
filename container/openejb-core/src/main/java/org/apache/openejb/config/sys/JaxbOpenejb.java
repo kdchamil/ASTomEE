@@ -130,7 +130,8 @@ public abstract class JaxbOpenejb {
 
     public static ServicesJar readServicesJar(final String providerPath) throws OpenEJBException {
 
-        final ClassLoader loader = Thread.currentThread().getContextClassLoader();
+        //final ClassLoader loader = Thread.currentThread().getContextClassLoader();
+		final ClassLoader loader = JaxbOpenejb.class.getClassLoader();
 
         final List<URL> sources = new ArrayList<URL>();
 

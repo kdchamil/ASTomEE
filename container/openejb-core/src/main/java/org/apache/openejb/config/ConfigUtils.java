@@ -158,7 +158,7 @@ public class ConfigUtils {
     }
 
     public static File createConfig(File config) throws java.io.IOException {
-        ResourceFinder finder = new ResourceFinder("");
+        ResourceFinder finder = new ResourceFinder("", ConfigUtils.class.getClassLoader());
         URL defaultConfig = finder.find("default.openejb.conf");
 
         IO.copy(IO.read(defaultConfig), config);

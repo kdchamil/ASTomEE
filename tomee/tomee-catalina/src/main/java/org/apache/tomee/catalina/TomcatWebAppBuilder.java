@@ -1777,6 +1777,11 @@ public class TomcatWebAppBuilder implements WebAppBuilder, ContextListener, Pare
 
     private static boolean isExcludedBySystemProperty(final StandardContext standardContext) {
         String name = standardContext.getName();
+
+	    //ignore carbon root application
+	    if("/".equals(name)){
+		    return true;
+	    }
         if (name == null) {
             name = standardContext.getPath();
             if (name == null) { // possible ?
