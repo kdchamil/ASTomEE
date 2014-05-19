@@ -1,0 +1,19 @@
+1. checkout the project from 
+
+https://github.com/kdchamil/ASTomEE/
+
+
+2. run following command from the project root  
+mvn clean install -DskipTests
+
+3. copy the jar into dropins
+cp org.wso2.tomee/target/org.wso2.tomee-<version>.jar $CARBON_HOME/repository/components/dropins/org.wso2.tomee_<version>.jar
+
+4. Edit $CARBON_HOME/repository/conf/tomcat/catalina-server.xml and add
+ <Listener className="org.apache.tomee.catalina.ServerListener" />
+
+5. start the AS.
+
+
+
+
