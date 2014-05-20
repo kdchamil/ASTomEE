@@ -3,13 +3,15 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>j2ee</artifactId>
-        <groupId>org.wso2.carbon</groupId>
-        <version>1.0.0</version>
+        <artifactId>openejb</artifactId>
+        <groupId>org.apache.openejb</groupId>
+        <version>4.6.0.1</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
+    <groupId>org.wso2.carbon</groupId>
     <artifactId>org.wso2.tomee</artifactId>
+    <version>1.0.0</version>
     <packaging>bundle</packaging>
     <name>WSO2 TomEE</name>
     <url>http://wso2.org</url>
@@ -30,16 +32,37 @@
                     <instructions>
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
                         <Bundle-Name>${project.artifactId}</Bundle-Name>
-			<Import-Package>*;resolution:=optional</Import-Package>
-			<Export-Package>
-				org.apache.tomee.*;version="1.0.0";-split-package:=merge-first,
-                        	org.apache.openejb.*;version="1.0.0";-split-package:=merge-first,
-				org.apache.xbean.*;version="1.0.0";-split-package:=merge-first,
-			</Export-Package>
-			<Include-Resource>
-				{maven-resources},
-				@openejb-core-${openejb.version}.jar!/**
-			</Include-Resource>
+                        <Import-Package>*;resolution:=optional</Import-Package>
+                        <Export-Package>
+                            org.apache.tomee.*;version="1.0.0",
+                            org.apache.openejb.*;version="1.0.0";-split-package:=merge-first,
+                            org.apache.xbean.*;version="1.0.0";-split-package:=merge-first,
+                            javax.annotation.*;version="1.0.0";-split-package:=merge-first,
+                            javax.ejb.*;version="1.0.0";-split-package:=merge-first,
+                            javax.enterprise.*;version="1.0.0";-split-package:=merge-first,
+                            javax.validation.*;version="1.0.0";-split-package:=merge-first,
+                            javax.resource.*;version="1.0.0";-split-package:=merge-first,
+                            org.apache.webbeans.*;version="1.0.0",
+                            org.apache.geronimo.transaction.*;version="1.0.0";-split-package:=merge-first,
+                            javax.persistence.*;version="1.0.0";-split-package:=merge-first,
+                            javax.security.jacc.*;version="1.0.0";-split-package:=merge-first,
+                            javax.ws.rs.*;version="1.0.0";-split-package:=merge-first,
+                            org.apache.commons.lang3.*;version="1.0.0";-split-package:=merge-first,
+                            org.hsqldb.*;version="1.0.0";-split-package:=merge-first,
+                            javax.inject.*;version="1.0.0";-split-package:=merge-first,
+                            org.metatype.sxc.*;version="1.0.0";-split-package:=merge-first,
+                            javax.interceptor.*;version="1.0.0";-split-package:=merge-first,
+                            org.apache.bval.*;version="1.0.0";-split-package:=merge-first,
+                            org.apache.commons.beanutils.*;version="1.0.0";-split-package:=merge-first,
+                            javax.decorator.*;version="1.0.0";-split-package:=merge-first,
+                        </Export-Package>
+                        <Include-Resource>
+                            {maven-resources},
+                            @openejb-core-${openejb.version}.jar!/**,
+                            @tomee-webapp-${tomee.version}.jar!/**,
+                            @bval-jsr303-0.5.jar!/**,
+                            @openwebbeans-impl-1.2.1.jar!/**
+                        </Include-Resource>
                         <DynamicImport-Package>*</DynamicImport-Package>
                     </instructions>
                 </configuration>
@@ -50,7 +73,7 @@
     <dependencies>
         <dependency>
             <groupId>org.apache.openejb</groupId>
-            <artifactId>tomee-catalina</artifactId>
+            <artifactId>tomee-webapp</artifactId>
             <version>1.6.0.1</version>
         </dependency>
     </dependencies>

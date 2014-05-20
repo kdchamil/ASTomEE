@@ -356,7 +356,8 @@
         <module>tck</module>
         <module>arquillian</module>
         <module>utils</module>
-        <module>tomee</module>
+	<module>tomee</module>
+	<module>org.wso2.tomee</module>
       </modules>
     </profile>
     <profile>
