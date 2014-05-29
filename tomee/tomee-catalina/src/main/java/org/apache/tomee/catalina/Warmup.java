@@ -17,10 +17,7 @@
 package org.apache.tomee.catalina;
 
 import org.apache.openejb.config.TldScanner;
-import org.apache.openejb.jee.JaxbJavaee;
-import org.apache.openejb.jee.WebApp;
 
-import javax.xml.bind.JAXBException;
 import java.util.concurrent.Semaphore;
 
 /**
@@ -141,7 +138,7 @@ public class Warmup {
                 "org.apache.tomcat.util.threads.ThreadPoolExecutor",
                 "org.apache.tomee.catalina.BackportUtil",
                 "org.apache.tomee.catalina.BackportUtil$1",
-                "org.apache.tomee.loader.TomEEJarScanner",
+                // "org.apache.tomee.loader.TomEEJarScanner", //not to be used by WSO2 AS
                 // "org.apache.tomee.catalina.TomcatLoader", // can't be loaded from here
                 "org.apache.webbeans.config.WebBeansFinder",
                 "org.apache.webbeans.container.InjectionResolver",

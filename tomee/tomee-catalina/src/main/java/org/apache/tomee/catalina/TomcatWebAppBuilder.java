@@ -16,76 +16,12 @@
  */
 package org.apache.tomee.catalina;
 
-import static org.apache.tomee.catalina.BackportUtil.getNamingContextListener;
-import static org.apache.tomee.catalina.Contexts.warPath;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Serializable;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
-
-import javax.ejb.spi.HandleDelegate;
-import javax.el.ELResolver;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NameNotFoundException;
-import javax.naming.NamingException;
-import javax.naming.Reference;
-import javax.naming.StringRefAddr;
-import javax.servlet.ServletContext;
-import javax.servlet.SessionTrackingMode;
-import javax.servlet.jsp.JspApplicationContext;
-import javax.servlet.jsp.JspFactory;
-import javax.sql.DataSource;
-import javax.transaction.TransactionManager;
-import javax.transaction.TransactionSynchronizationRegistry;
-
-import org.apache.catalina.Cluster;
+import org.apache.catalina.*;
 import org.apache.catalina.Container;
-import org.apache.catalina.Engine;
-import org.apache.catalina.Host;
-import org.apache.catalina.LifecycleException;
-import org.apache.catalina.LifecycleListener;
-import org.apache.catalina.Loader;
-import org.apache.catalina.Manager;
-import org.apache.catalina.Pipeline;
-import org.apache.catalina.Realm;
 import org.apache.catalina.Service;
 import org.apache.catalina.UserDatabase;
-import org.apache.catalina.Valve;
-import org.apache.catalina.Wrapper;
-import org.apache.catalina.core.ContainerBase;
-import org.apache.catalina.core.NamingContextListener;
-import org.apache.catalina.core.StandardContext;
-import org.apache.catalina.core.StandardHost;
-import org.apache.catalina.core.StandardServer;
-import org.apache.catalina.core.StandardWrapper;
-import org.apache.catalina.deploy.ApplicationParameter;
-import org.apache.catalina.deploy.ContextEnvironment;
-import org.apache.catalina.deploy.ContextResource;
-import org.apache.catalina.deploy.ContextResourceLink;
-import org.apache.catalina.deploy.ContextTransaction;
-import org.apache.catalina.deploy.FilterDef;
-import org.apache.catalina.deploy.FilterMap;
-import org.apache.catalina.deploy.NamingResources;
-import org.apache.catalina.deploy.ResourceBase;
+import org.apache.catalina.core.*;
+import org.apache.catalina.deploy.*;
 import org.apache.catalina.ha.CatalinaCluster;
 import org.apache.catalina.ha.tcp.SimpleTcpCluster;
 import org.apache.catalina.loader.VirtualWebappLoader;
@@ -93,48 +29,19 @@ import org.apache.catalina.loader.WebappLoader;
 import org.apache.catalina.realm.RealmBase;
 import org.apache.catalina.session.StandardManager;
 import org.apache.catalina.startup.Constants;
-import org.apache.catalina.startup.ContextConfig;
-import org.apache.catalina.startup.HostConfig;
-import org.apache.catalina.startup.RealmRuleSet;
-import org.apache.catalina.startup.SetAllPropertiesRule;
-import org.apache.catalina.startup.SetNextNamingRule;
+import org.apache.catalina.startup.*;
 import org.apache.catalina.users.MemoryUserDatabase;
 import org.apache.naming.ContextAccessController;
 import org.apache.naming.ContextBindings;
 import org.apache.naming.ResourceEnvRef;
 import org.apache.naming.ResourceRef;
-import org.apache.openejb.AppContext;
-import org.apache.openejb.BeanContext;
-import org.apache.openejb.BeanType;
-import org.apache.openejb.ClassLoaderUtil;
-import org.apache.openejb.Injection;
-import org.apache.openejb.OpenEJBException;
-import org.apache.openejb.OpenEJBRuntimeException;
+import org.apache.openejb.*;
 import org.apache.openejb.assembler.DeployerEjb;
-import org.apache.openejb.assembler.classic.AppInfo;
-import org.apache.openejb.assembler.classic.Assembler;
-import org.apache.openejb.assembler.classic.ClassListInfo;
-import org.apache.openejb.assembler.classic.ConnectorInfo;
-import org.apache.openejb.assembler.classic.DeploymentExceptionManager;
-import org.apache.openejb.assembler.classic.EjbJarInfo;
-import org.apache.openejb.assembler.classic.InjectionBuilder;
-import org.apache.openejb.assembler.classic.JndiEncBuilder;
-import org.apache.openejb.assembler.classic.OpenEjbConfiguration;
-import org.apache.openejb.assembler.classic.PersistenceUnitInfo;
-import org.apache.openejb.assembler.classic.ReloadableEntityManagerFactory;
-import org.apache.openejb.assembler.classic.ResourceInfo;
-import org.apache.openejb.assembler.classic.ServletInfo;
-import org.apache.openejb.assembler.classic.WebAppBuilder;
-import org.apache.openejb.assembler.classic.WebAppInfo;
+import org.apache.openejb.assembler.classic.*;
 import org.apache.openejb.assembler.classic.event.NewEjbAvailableAfterApplicationCreated;
 import org.apache.openejb.cdi.CdiBuilder;
 import org.apache.openejb.cdi.OpenEJBLifecycle;
-import org.apache.openejb.config.AppModule;
-import org.apache.openejb.config.ConfigurationFactory;
-import org.apache.openejb.config.DeploymentLoader;
-import org.apache.openejb.config.EjbModule;
-import org.apache.openejb.config.TldScanner;
-import org.apache.openejb.config.WebModule;
+import org.apache.openejb.config.*;
 import org.apache.openejb.config.sys.Resource;
 import org.apache.openejb.core.CoreContainerSystem;
 import org.apache.openejb.core.ParentClassLoaderFinder;
@@ -167,6 +74,32 @@ import org.apache.tomee.loader.TomcatHelper;
 import org.apache.webbeans.config.WebBeansContext;
 import org.apache.webbeans.spi.adaptor.ELAdaptor;
 import org.omg.CORBA.ORB;
+
+import javax.ejb.spi.HandleDelegate;
+import javax.el.ELResolver;
+import javax.naming.Context;
+import javax.naming.*;
+import javax.servlet.ServletContext;
+import javax.servlet.SessionTrackingMode;
+import javax.servlet.jsp.JspApplicationContext;
+import javax.servlet.jsp.JspFactory;
+import javax.sql.DataSource;
+import javax.transaction.TransactionManager;
+import javax.transaction.TransactionSynchronizationRegistry;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Serializable;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.net.URL;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
+
+import static org.apache.tomee.catalina.BackportUtil.getNamingContextListener;
+import static org.apache.tomee.catalina.Contexts.warPath;
 
 /**
  * Web application builder.
@@ -1779,7 +1712,8 @@ public class TomcatWebAppBuilder implements WebAppBuilder, ContextListener, Pare
         String name = standardContext.getName();
 
 	    //ignore carbon root application & jaxrs_basic
-	    if("/".equals(name) || "/jaxrs_basic".equals(name)){
+	    if("/".equals(name) || "/jaxrs_basic".equals(name) || "/STRATOS_ROOT".equals(name)
+			    || "/docs".equals(name) || "/example".equals(name) || "/home".equals(name)){
 		    return true;
 	    }
         if (name == null) {

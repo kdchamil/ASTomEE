@@ -55,13 +55,16 @@
                             org.apache.bval.*;version="1.0.0";-split-package:=merge-first,
                             org.apache.commons.beanutils.*;version="1.0.0";-split-package:=merge-first,
                             javax.decorator.*;version="1.0.0";-split-package:=merge-first,
+                            javax.management.j2ee.*;version="1.0.0";-split-package:=merge-first,
+                            org.apache.myfaces.*;version="1.0.0";-split-package:=merge-first,
                         </Export-Package>
                         <Include-Resource>
                             {maven-resources},
                             @openejb-core-${openejb.version}.jar!/**,
                             @tomee-webapp-${tomee.version}.jar!/**,
                             @bval-jsr303-0.5.jar!/**,
-                            @openwebbeans-impl-1.2.1.jar!/**
+                            @openwebbeans-impl-1.2.1.jar!/**,
+                            @myfaces-impl-2.1.13.jar!/META-INF/**
                         </Include-Resource>
                         <DynamicImport-Package>*</DynamicImport-Package>
                     </instructions>

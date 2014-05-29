@@ -22,6 +22,7 @@ import org.apache.catalina.Realm;
 import org.apache.catalina.Wrapper;
 import org.apache.catalina.core.StandardContext;
 import org.apache.catalina.core.StandardServer;
+import org.apache.tomcat.util.scan.StandardJarScanner;
 
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
@@ -164,6 +165,12 @@ public class TomcatHelper {
             if (!(standardContext.getJarScanner() instanceof TomEEJarScanner)) {
 				//TODO [CHAMIL] Due to an Issue this has been commented out. FIX ME
                 //standardContext.setJarScanner(new TomEEJarScanner());
+	            try{
+		            Class scannerClass = StandardContext.class.getClassLoader().loadClass("org.wso2.carbon.tomcat.ext.scan.CarbonTomcatJarScanner");
+		            standardContext.setJarScanner((StandardJarScanner)scannerClass.newInstance());
+	            }catch(Exception ex){
+		            standardContext.setJarScanner(new TomEEJarScanner());
+	            }
             }
 		} catch (Exception e) {
 			// ignore
