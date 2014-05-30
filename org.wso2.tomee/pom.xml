@@ -57,6 +57,7 @@
                             javax.decorator.*;version="1.0.0";-split-package:=merge-first,
                             javax.management.j2ee.*;version="1.0.0";-split-package:=merge-first,
                             org.apache.myfaces.*;version="1.0.0";-split-package:=merge-first,
+                            javax.faces.*;version="1.0.0";-split-package:=merge-first,
                         </Export-Package>
                         <Include-Resource>
                             {maven-resources},
