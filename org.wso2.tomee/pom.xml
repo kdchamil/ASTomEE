@@ -58,6 +58,7 @@
                             javax.management.j2ee.*;version="1.0.0";-split-package:=merge-first,
                             org.apache.myfaces.*;version="1.0.0";-split-package:=merge-first,
                             javax.faces.*;version="1.0.0";-split-package:=merge-first,
+                            org.apache.openjpa.*;version="2.3.0";-split-package:=merge-first,
                         </Export-Package>
                         <Include-Resource>
                             {maven-resources},
@@ -65,7 +66,8 @@
                             @tomee-webapp-${tomee.version}.jar!/**,
                             @bval-jsr303-0.5.jar!/**,
                             @openwebbeans-impl-1.2.1.jar!/**,
-                            @myfaces-impl-2.1.13.jar!/META-INF/**
+                            @myfaces-impl-2.1.13.jar!/META-INF/**,
+                            @openjpa-2.3.0-nonfinal-1540826.jar!/META-INF/** 
                         </Include-Resource>
                         <DynamicImport-Package>*</DynamicImport-Package>
                     </instructions>
@@ -79,6 +81,11 @@
             <groupId>org.apache.openejb</groupId>
             <artifactId>tomee-webapp</artifactId>
             <version>1.6.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.openejb.patch</groupId>
+            <artifactId>openjpa</artifactId>
+            <version>2.3.0-nonfinal-1540826</version>
         </dependency>
     </dependencies>
 

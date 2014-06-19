@@ -764,13 +764,25 @@ public class TomcatWebAppBuilder implements WebAppBuilder, ContextListener, Pare
             }
         }
 
-        //final LifecycleListener[] listeners = standardContext.findLifecycleListeners();
-        //for (final LifecycleListener l : listeners) {
-        //    if (l instanceof ContextConfig) {
-        //        standardContext.removeLifecycleListener(l);
-        //    }
-        //}
-        standardContext.addLifecycleListener(new OpenEJBContextConfig(new StandardContextInfo(standardContext)));
+        final LifecycleListener[] listeners = standardContext.findLifecycleListeners();
+        for (final LifecycleListener l : listeners) {
+            if (l instanceof ContextConfig) {
+                standardContext.removeLifecycleListener(l);
+            }
+        }
+
+        //set default web.xml and context.xml
+        String globalWebXml = new File(System.getProperty("carbon.home")).getAbsolutePath() +
+                File.separator + "repository" + File.separator + "conf" + File.separator +
+                "tomcat" + File.separator + "web.xml";
+        String globalContextXml = new File(System.getProperty("carbon.home")).getAbsolutePath() +
+                File.separator + "repository" + File.separator + "conf" + File.separator +
+                "tomcat" + File.separator + "context.xml";
+        ContextConfig contextConfig = new OpenEJBContextConfig(new StandardContextInfo(standardContext));
+        contextConfig.setDefaultWebXml(globalWebXml);
+        contextConfig.setDefaultContextXml(globalContextXml);
+
+        standardContext.addLifecycleListener(contextConfig);
 
         // force manually the namingContextListener to merge jndi in an easier way
         final NamingContextListener ncl = new NamingContextListener();
