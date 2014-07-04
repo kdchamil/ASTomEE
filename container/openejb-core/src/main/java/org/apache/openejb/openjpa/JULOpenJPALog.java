@@ -128,6 +128,10 @@ public class JULOpenJPALog  implements Log {
     private LogRecord record(final Object o,  final Level level) {
         final LogRecord record = new JuliLogStream.OpenEJBLogRecord(level, o.toString());
         record.setSourceMethodName(logger().getName());
+        // ############ START - WSO2 PATCH ############
+        record.setSourceClassName(logger().getName());
+        // ############ END - WSO2 PATCH ############
+
         return record;
     }
 }
