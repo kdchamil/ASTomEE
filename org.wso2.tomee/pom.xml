@@ -37,7 +37,6 @@
                             org.apache.tomee.*;version="1.0.0",
                             org.apache.openejb.*;version="1.0.0";-split-package:=merge-first,
                             org.apache.xbean.*;version="1.0.0";-split-package:=merge-first,
-                            javax.annotation.*;version="1.0.0";-split-package:=merge-first,
                             javax.ejb.*;version="1.0.0";-split-package:=merge-first,
                             javax.enterprise.*;version="1.0.0";-split-package:=merge-first,
                             javax.validation.*;version="1.0.0";-split-package:=merge-first,
