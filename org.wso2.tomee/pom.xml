@@ -66,6 +66,8 @@
                             @bval-jsr303-0.5.jar!/**,
                             @openwebbeans-impl-1.2.1.jar!/**,
                             @myfaces-impl-2.1.13.jar!/META-INF/**,
+                            @myfaces-api-2.1.13.jar!/META-INF/**,
+                            @tomee-myfaces-1.6.0.1.jar!/META-INF/**,
                             @openjpa-2.3.0-nonfinal-1540826.jar!/META-INF/** 
                         </Include-Resource>
                         <DynamicImport-Package>*</DynamicImport-Package>
