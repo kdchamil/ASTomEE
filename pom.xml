@@ -164,7 +164,7 @@
     <commons-logging-api.version>1.1</commons-logging-api.version>
     <commons-dbcp.version>1.4</commons-dbcp.version>
     <commons-pool.version>1.5.7</commons-pool.version>
-    <commons-collections.version>3.2.1</commons-collections.version>
+    <commons-collections.version>3.2.2</commons-collections.version>
     <commons-codec.version>1.7</commons-codec.version>
     <commons-fileupload.version>1.2.2</commons-fileupload.version>
     <commons-discovery.version>0.5</commons-discovery.version>
